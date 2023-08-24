@@ -1,0 +1,16 @@
+{
+  "name": "eslint-config-custom",
+  "version": "1.0.0",
+  "description": "Just ESLint",
+  "author": "univdev <pcydeveloper@gmail.com>",
+  "homepage": "https://github.com/univdev/web-labs#readme",
+  "license": "ISC",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/univdev/web-labs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/univdev/web-labs/issues"
+  }
+}
