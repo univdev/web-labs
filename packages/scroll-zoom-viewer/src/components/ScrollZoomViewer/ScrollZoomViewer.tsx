@@ -1,19 +1,16 @@
 /** @jsxImportSource @emotion/react */
 
-import { Ref, forwardRef, useRef, useImperativeHandle } from 'react';
-import { ScrollZoomViewerProps } from './ScrollZoomViewer.types';
+import { forwardRef, useRef, useImperativeHandle, Ref } from 'react';
 import classNames from 'classnames';
 import { css } from '@emotion/react';
-import { useZoom } from './hooks/useZoom';
+import { ScrollZoomViewerProps } from './ScrollZoomViewer.types';
 
 export const ScrollZoomViewer = forwardRef(({
   zoom = 1,
+  minimumZoom = .5,
+  maximumZoom = 5,
   contentWidth = 500,
   contentHeight = 500,
-  increaseZoomStep = 0.02,
-  decreaseZoomStep = 0.02,
-  maximumZoom = 5,
-  minimumZoom = .5,
   onChangeZoom,
   onWheel,
   children,
@@ -21,19 +18,6 @@ export const ScrollZoomViewer = forwardRef(({
 }: ScrollZoomViewerProps, ref: Ref<HTMLDivElement | null>) => {
   const viewerRef = useRef<HTMLDivElement>(null);
 
-  const { onChangeZoomEvent } = useZoom({
-    element: viewerRef.current,
-    zoom,
-    minimumZoom,
-    maximumZoom,
-    increaseZoomStep,
-    decreaseZoomStep,
-    onChangeZoom,
-  });
-  
-  const contentWidthValue = contentWidth * zoom;
-  const contentHeightValue = contentHeight * zoom;
-  
   useImperativeHandle(ref, () => viewerRef.current);
 
   return (
@@ -42,36 +26,13 @@ export const ScrollZoomViewer = forwardRef(({
       { ...others }
       className={classNames(
         'ScrollZoomViewer',
-        others.className
+        others.className,
       )}
       css={css`
         width: 100%;
         height: 100%;
         overflow: auto;
       `}
-      onWheel={(event) => {
-        if (viewerRef.current) {
-          const { scrollLeft, scrollTop, clientWidth, clientHeight } = viewerRef.current;
-          const { clientX, clientY } = event;
-          const isIncrease = event.deltaY < 0;
-          const xScrollRatio = clientX / clientWidth;
-          const yScrollRatio = clientY / clientHeight;
-
-          const scale = maximumZoom - minimumZoom;
-          const stepCount = isIncrease ? scale / increaseZoomStep : scale / decreaseZoomStep;
-
-          const xStepDistance = clientWidth / (stepCount / 4) * xScrollRatio;
-          const yStepDistance = clientHeight / (stepCount / 4) * yScrollRatio;
-
-          const movedXScroll = isIncrease ? scrollLeft + xStepDistance : scrollLeft - xStepDistance;
-          const movedYScroll = isIncrease ? scrollTop + yStepDistance : scrollTop - yStepDistance;
-
-          viewerRef.current.scrollLeft = movedXScroll;
-          viewerRef.current.scrollTop = movedYScroll;
-  
-          onChangeZoomEvent(isIncrease);
-        }
-      }}
     >
       <div
         className="ScrollZoomViewer__Wrapper"
@@ -84,16 +45,25 @@ export const ScrollZoomViewer = forwardRef(({
         `}
       >
         <div
-          className="ScrollZoomViewer__Content"
+          className="ScrollZoomViewer__Container"
           css={css`
             margin: auto;
           `}
           style={{
-            width: contentWidthValue,
-            height: contentHeightValue,
+            width: contentWidth * zoom,
+            height: contentHeight * zoom,
           }}
         >
-          { children }
+          <div
+            className="ScrollZoomViewer__Content"
+            style={{
+              width: contentWidth,
+              height: contentHeight,
+              transform: `scale(${zoom})`,
+            }}
+          >
+            { children }
+          </div>
         </div>
       </div>
     </div>
