@@ -1,3 +1,21 @@
 {
-  "extends": "next/core-web-vitals"
+  // airbnb 익스텐션 추가
+  "extends": ["next/core-web-vitals", "airbnb"],
+  "rules": {
+    // react 파일 확장자 선언
+    "react/jsx-filename-extension": [1, { "extensions": [".jsx", ".js", ".tsx", ".ts"] }],
+    // react 파일에서 import React를 생략해도 되는 옵션
+    "react/react-in-jsx-scope": [0],
+    // import 할 때 확장자를 생략하는 옵션
+    "import/extensions": [
+      1,
+      "ignorePackage",
+      {
+        "ts": "never",
+        "tsx": "never",
+        "js": "never",
+        "jsx": "never"
+      }
+    ]
+  }
 }
