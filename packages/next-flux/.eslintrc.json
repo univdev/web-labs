@@ -16,6 +16,9 @@
         "js": "never",
         "jsx": "never"
       }
-    ]
+    ],
+    "react/self-closing-comp": {
+      
+    }
   }
 }
