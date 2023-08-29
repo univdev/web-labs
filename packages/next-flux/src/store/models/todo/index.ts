@@ -21,6 +21,7 @@ export const TodoModel = createSlice({
     removeOne: TodoModelAdapter.removeOne,
     removeMany: TodoModelAdapter.removeMany,
     setAll: TodoModelAdapter.setAll,
+    setOne: TodoModelAdapter.setOne,
     setMany: TodoModelAdapter.setMany,
   },
 });
