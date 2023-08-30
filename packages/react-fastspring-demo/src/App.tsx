@@ -23,7 +23,7 @@ export default function App() {
       window.fastspring.builder.tag({
         userId: 'hello world',
       });
-      window.fastspring.builder.add('one-shot-logo');
+      window.fastspring.builder.add('one-time-plan');
       window.fastspring.builder.checkout();
     }
   };
@@ -33,9 +33,8 @@ export default function App() {
       window.fastspring.builder.reset();
       window.fastspring.builder.tag({
         userId: 'hello world',
-        myWorkId: 'myWorkId',
       });
-      window.fastspring.builder.add('logo-master');
+      window.fastspring.builder.add('yearly-plan');
       window.fastspring.builder.checkout();
     }
   };
