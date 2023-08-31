@@ -4,5 +4,10 @@
   "devDependencies": {
     "lerna": "^5.1.8"
   },
-  "workspaces": ["packages/*"]
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "start": "^5.1.0"
+  }
 }
